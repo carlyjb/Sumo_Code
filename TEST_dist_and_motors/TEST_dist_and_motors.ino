@@ -65,8 +65,8 @@ static boolean motor1 = 0;  //for motorDrive, motorStop, motorBrake functions
 static boolean motor2 = 1;  //for motorDrive, motorStop, motorBrake functions
 
 
-const int trigPin = 27; //A4
-const int echoPin = 28; //A5
+const int trigPin = A4; 
+const int echoPin = A5; 
 
 const int ledPin = 13;
 
@@ -96,18 +96,18 @@ void loop()
 
   // The sensor is triggered by a HIGH pulse of 10 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
-  pinMode(A4, OUTPUT);
-  analogWrite(A4, LOW);
+  pinMode(trigPin, OUTPUT);
+  analogWrite(trigPin, LOW);
   delayMicroseconds(2);
-  digitalWrite(A4, HIGH);
+  digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(A4, LOW);
+  digitalWrite(trigPin, LOW);
 
   // Read the signal from the sensor: a HIGH pulse whose
   // duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
-  pinMode(A5, INPUT);
-  duration = pulseIn(A5, HIGH);
+  pinMode(echoPin, INPUT);
+  duration = pulseIn(echoPin, HIGH);
 
   // convert the time into a distance
   inches = microsecondsToInches(duration);

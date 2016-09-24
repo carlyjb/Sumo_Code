@@ -52,8 +52,8 @@ void loop()
   // Read the signal from the sensor: a HIGH pulse whose
   // duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
-  pinMode(A5, INPUT);
-  duration = pulseIn(A5, HIGH);
+  pinMode(A3, INPUT);
+  duration = pulseIn(A3, HIGH);
 
   // convert the time into a distance
   inches = microsecondsToInches(duration);
