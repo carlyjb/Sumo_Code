@@ -62,8 +62,8 @@ void loop()
 {
  
   //Drive both motors CW, full speed
-//  motorDrive(motor1, turnCW, 255);
-//  motorDrive(motor2, turnCW, 255);
+  motorDrive(motor1, turnCW, 255);
+  motorDrive(motor2, turnCW, 255);
  
   //Keep driving for 2 secs
   delay(2000);

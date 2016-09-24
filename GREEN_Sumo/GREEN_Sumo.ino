@@ -95,7 +95,7 @@ void loop()
   {
     driveBackward();
     delay(REVERSE_TIME);
-    turnRight();
+    turnLeft();
     delay(100);
     Ping(TURN_DURATION);
   }
@@ -103,7 +103,7 @@ void loop()
   {
     driveBackward();
     delay(REVERSE_TIME);
-    turnLeft();
+    turnRight();
     delay(100);
     Ping(TURN_DURATION);
   }

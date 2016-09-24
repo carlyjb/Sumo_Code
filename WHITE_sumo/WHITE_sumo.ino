@@ -129,14 +129,14 @@ void Ping(int TimeLength)
 
 void driveForward()
 {
-    motorDrive(motor1, turnCW, 255);
-    motorDrive(motor2, turnCW, 255);
+    motorDrive(motor1, turnCCW, 255);
+    motorDrive(motor2, turnCCW, 255);
 }
 
 void driveBackward()
 {
-    motorDrive(motor1, turnCCW, 255);
-    motorDrive(motor2, turnCCW, 255);
+    motorDrive(motor1, turnCW, 255);
+    motorDrive(motor2, turnCW, 255);
 }
 
 void turnRight()

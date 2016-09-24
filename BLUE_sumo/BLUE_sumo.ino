@@ -43,8 +43,8 @@ static boolean turnCCW = 1; //for motorDrive function
 static boolean motor1 = 0;  //for motorDrive, motorStop, motorBrake functions
 static boolean motor2 = 1;  //for motorDrive, motorStop, motorBrake functions
 
-const int trigPin = A4; 
-const int echoPin = A7; 
+const int trigPin = A4;
+const int echoPin = A7;
 
 int Left_Light_Pin = A6;     // analog 6
 int Right_Light_Pin = A0;    // analog 0
@@ -52,7 +52,7 @@ int Right_Light_Pin = A0;    // analog 0
 // light sensors
 float QRE_Value_L = 0;
 float QRE_Value_R = 0;
-long ObjectDistance;
+long ObjectDistance = 0;
 
 // establish variables for duration of the ping,
 // and the distance result in inches and centimeters:
@@ -63,7 +63,7 @@ int rightTurnCount, leftTurnCount;
 
 
 
-void setup() 
+void setup()
 { // put your setup code here, to run once:
   pinMode(pinPWMA, OUTPUT);
   pinMode(pinAIN1, OUTPUT);
@@ -78,18 +78,18 @@ void setup()
   rightTurnCount = 0;
   leftTurnCount = 0;
 
-  delay(5010);  //wait 5 seconds at beginning of match  
+  delay(5010);  //wait 5 seconds at beginning of match
 }
 
 
 
-void loop() 
+void loop()
 { // put your main code here, to run repeatedly:
-  QRE_Value_L = analogRead(Left_Light_Pin);
-  QRE_Value_R = analogRead(Right_Light_Pin);
+  //  QRE_Value_L = analogRead(Left_Light_Pin);
+  //  QRE_Value_R = analogRead(Right_Light_Pin);
 
   ObjectDistance = GetPingDistance();
-  if(ObjectDistance < 6)
+  if (ObjectDistance < 6 && ObjectDistance > 1)
   {
     driveForward();
   }
@@ -117,25 +117,25 @@ void loop()
 
 void Ping(int TimeLength)
 {
-  int MaxTime = TimeLength/10;
+  int MaxTime = TimeLength / 10;
   int i = 0;
-  while(i < TimeLength)
+  while (i < TimeLength)
   {
     i++;
-    long ObjectDistance = GetPingDistance();
+    ObjectDistance = GetPingDistance();
   }
 }
 
 void driveForward()
 {
-    motorDrive(motor1, turnCCW, 255);
-    motorDrive(motor2, turnCCW, 255);
+  motorDrive(motor1, turnCCW, 255);
+  motorDrive(motor2, turnCCW, 255);
 }
 
 void driveBackward()
 {
-    motorDrive(motor1, turnCW, 255);
-    motorDrive(motor2, turnCW, 255);
+  motorDrive(motor1, turnCW, 255);
+  motorDrive(motor2, turnCW, 255);
 }
 
 void turnRight()
@@ -169,7 +169,7 @@ void motorDrive(boolean motorNumber, boolean motorDirection, int motorSpeed)
     pinIn1 = LOW;
 
   //Select the motor to turn, and set the direction and the speed
-  if(motorNumber == motor1)
+  if (motorNumber == motor1)
   {
     digitalWrite(pinAIN1, pinIn1);
     digitalWrite(pinAIN2, !pinIn1);  //This is the opposite of the AIN1
@@ -187,7 +187,7 @@ void motorDrive(boolean motorNumber, boolean motorDirection, int motorSpeed)
 
 void motorBrake(boolean motorNumber)
 {
-/* This "Short Brake"s the specified motor, by setting speed to zero */
+  /* This "Short Brake"s the specified motor, by setting speed to zero */
 
   if (motorNumber == motor1)
     analogWrite(pinPWMA, 0);
@@ -206,7 +206,7 @@ void motorStop(boolean motorNumber)
   {
     digitalWrite(pinBIN1, LOW);
     digitalWrite(pinBIN2, LOW);
-  } 
+  }
 }
 
 void motorsStandby()
@@ -237,7 +237,7 @@ long GetPingDistance()
   cm = microsecondsToCentimeters(duration);
 
   delay(3);       // function delays 10ms
-  return(cm);
+  return (cm);
 }
 
 long microsecondsToInches(long microseconds)
