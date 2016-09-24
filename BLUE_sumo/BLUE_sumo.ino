@@ -95,7 +95,7 @@ void loop()
   }
   else
   {
-    if(rightTurnCount < TURN_DURATION)
+    if (rightTurnCount < TURN_DURATION)
     {
       turnRight();
       rightTurnCount++;
@@ -109,8 +109,8 @@ void loop()
     {
       rightTurnCount = 0;
       leftTurnCount = 0;
-      turnRight();
-      rightTurnCount++;
+      turnLeft();
+      leftTurnCount++;
     }
   }
 }
@@ -128,14 +128,14 @@ void Ping(int TimeLength)
 
 void driveForward()
 {
-    motorDrive(motor1, turnCW, 255);
-    motorDrive(motor2, turnCW, 255);
+    motorDrive(motor1, turnCCW, 255);
+    motorDrive(motor2, turnCCW, 255);
 }
 
 void driveBackward()
 {
-    motorDrive(motor1, turnCCW, 255);
-    motorDrive(motor2, turnCCW, 255);
+    motorDrive(motor1, turnCW, 255);
+    motorDrive(motor2, turnCW, 255);
 }
 
 void turnRight()

@@ -1,10 +1,10 @@
 #include <ZumoMotors.h>
 
-#define TURN_SPEED 100
+#define TURN_SPEED 125
 #define DRIVE_SPEED 400
 #define REVERSE_TIME 200
 #define PING_RANGE 50       //centimeters
-#define TURN_DURATION 400
+#define TURN_DURATION 500
 #define LIGHT_THRESH 200 // greater than = black
 
 /*
@@ -44,7 +44,7 @@ static boolean motor1 = 0;  //for motorDrive, motorStop, motorBrake functions
 static boolean motor2 = 1;  //for motorDrive, motorStop, motorBrake functions
 
 const int trigPin = A4; 
-const int echoPin = A5; 
+const int echoPin = A7; 
 
 int Left_Light_Pin = A6;     // analog 6
 int Right_Light_Pin = A0;    // analog 0
@@ -52,10 +52,13 @@ int Right_Light_Pin = A0;    // analog 0
 // light sensors
 float QRE_Value_L = 0;
 float QRE_Value_R = 0;
+long ObjectDistance;
 
 // establish variables for duration of the ping,
 // and the distance result in inches and centimeters:
 long duration, inches, cm;
+
+int rightTurnCount, leftTurnCount;
 
 
 
@@ -72,6 +75,9 @@ void setup()
 
   pinMode(pinSTBY, OUTPUT);
 
+  rightTurnCount = 0;
+  leftTurnCount = 0;
+
   delay(5010);  //wait 5 seconds at beginning of match  
 }
 
@@ -79,36 +85,35 @@ void setup()
 
 void loop() 
 { // put your main code here, to run repeatedly:
-  QRE_Value_L = analogRead(Left_Light_Pin);
-  QRE_Value_R = analogRead(Right_Light_Pin);
+//  QRE_Value_L = analogRead(Left_Light_Pin);
+//  QRE_Value_R = analogRead(Right_Light_Pin);
 
-  if( (QRE_Value_L < LIGHT_THRESH) && (QRE_Value_R < LIGHT_THRESH) )
+  ObjectDistance = GetPingDistance();
+  if(ObjectDistance < 6)
   {
-    driveBackward();
-    delay(REVERSE_TIME * 2);
-    turnRight();
-    delay(100);
-    Ping(TURN_DURATION);
+    driveForward();
   }
-
-  else if(QRE_Value_L < LIGHT_THRESH)
+  else
   {
-    driveBackward();
-    delay(REVERSE_TIME);
-    turnRight();
-    delay(100);
-    Ping(TURN_DURATION);
+    if (leftTurnCount < TURN_DURATION)
+    {
+      turnLeft();
+      leftTurnCount++;
+    }
+    
+    else if (rightTurnCount < TURN_DURATION)
+    {
+      turnRight();
+      rightTurnCount++;
+    }
+    else
+    {
+      rightTurnCount = 0;
+      leftTurnCount = 0;
+      turnLeft();
+      leftTurnCount++;
+    }
   }
-  else if(QRE_Value_R < LIGHT_THRESH)
-  {
-    driveBackward();
-    delay(REVERSE_TIME);
-    turnLeft();
-    delay(100);
-    Ping(TURN_DURATION);
-  }
-  
-  driveForward();
 }
 
 void Ping(int TimeLength)
@@ -124,26 +129,26 @@ void Ping(int TimeLength)
 
 void driveForward()
 {
-    motorDrive(motor1, turnCCW, 255);
-    motorDrive(motor2, turnCCW, 255);
-}
-
-void driveBackward()
-{
     motorDrive(motor1, turnCW, 255);
     motorDrive(motor2, turnCW, 255);
 }
 
+void driveBackward()
+{
+    motorDrive(motor1, turnCCW, 255);
+    motorDrive(motor2, turnCCW, 255);
+}
+
 void turnRight()
 {
-  motorDrive(motor1, turnCW, TURN_SPEED);
-  motorDrive(motor2, turnCCW, TURN_SPEED);
+  motorDrive(motor1, turnCW, 255);
+  motorDrive(motor2, turnCCW, 255);
 }
 
 void turnLeft()
 {
-  motorDrive(motor1, turnCCW, TURN_SPEED);
-  motorDrive(motor2, turnCW, TURN_SPEED);
+  motorDrive(motor1, turnCCW, 255);
+  motorDrive(motor2, turnCW, 255);
 }
 
 void motorDrive(boolean motorNumber, boolean motorDirection, int motorSpeed)

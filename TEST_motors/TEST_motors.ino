@@ -62,8 +62,8 @@ void loop()
 {
  
   //Drive both motors CW, full speed
-  motorDrive(motor1, turnCW, 255);
-  motorDrive(motor2, turnCW, 255);
+//  motorDrive(motor1, turnCW, 255);
+//  motorDrive(motor2, turnCW, 255);
  
   //Keep driving for 2 secs
   delay(2000);
@@ -82,30 +82,6 @@ void loop()
     motorBrake(1);
     motorBrake(0);
   delay(1000);
-
-//  wigglePins();
-
-}
-
-void wigglePins()
-{
-  digitalWrite(pinAIN1, HIGH);
-  digitalWrite(pinAIN2, HIGH);
-  digitalWrite(pinBIN1, HIGH);
-  digitalWrite(pinBIN2, HIGH);
-  analogWrite(pinPWMA, 255);
-  analogWrite(pinPWMB, 255);
-  digitalWrite(pinSTBY, HIGH);
-  delay(2000);
-  
-  digitalWrite(pinAIN1, LOW);
-  digitalWrite(pinAIN2, LOW);
-  digitalWrite(pinBIN1, LOW);
-  digitalWrite(pinBIN2, LOW);
-  analogWrite(pinPWMA, 0);
-  analogWrite(pinPWMB, 0);
-  digitalWrite(pinSTBY, LOW);
-  delay(2000);
 }
 
 void motorDrive(boolean motorNumber, boolean motorDirection, int motorSpeed)
@@ -187,3 +163,4 @@ void motorsStandby()
   */
   digitalWrite(pinSTBY, LOW);
 }
+
